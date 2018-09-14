@@ -13,8 +13,6 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
-const ImageminPlugin = require("imagemin-webpack-plugin").default;
-
 //extract css from javascript modules
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
@@ -46,10 +44,6 @@ const plugins = [
             to: path.resolve(__dirname, "../dist/images")
         }
     ]),
-    new ImageminPlugin({
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        disable: mode.isDevelopment
-    }),
 
     new HandlebarsPlugin({
         entry: path.join(__dirname, "../src", "pages", "*.hbs"),

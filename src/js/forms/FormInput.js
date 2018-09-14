@@ -82,9 +82,6 @@ export default class FormInput extends HTMLElement {
                border-top-color:#E3342F;
                border-top-width:4px;
             }
-
-
-
         `;
         this.shadow.appendChild(this.styleNode);
         return this;

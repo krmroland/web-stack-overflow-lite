@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "cross-env NODE_ENV=development webpack --progress --hide-modules --watch --watch-poll",
+    "watch":
+      "cross-env NODE_ENV=development webpack --progress --hide-modules --watch --watch-poll",
     "build": "cross-env NODE_ENV=none webpack --progress --hide-modules",
-    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "production":
+      "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,7 @@
   "homepage": "https://github.com/krmroland/web-stack-overflow-lite#readme",
   "devDependencies": {
     "@babel/core": "^7.0.1",
+    "@babel/preset-env": "^7.0.0",
     "autoprefixer": "^9.1.0",
     "babel-loader": "^8.0.2",
     "browser-sync": "^2.24.6",
@@ -36,7 +39,6 @@
     "glob-all": "^3.1.0",
     "handlebars-layouts": "^3.1.4",
     "handlebars-webpack-plugin": "^1.5.0",
-    "imagemin-webpack-plugin": "^2.2.0",
     "node-sass": "^4.9.2",
     "optimize-css-assets-webpack-plugin": "^5.0.0",
     "postcss-loader": "^2.1.6",
@@ -49,7 +51,6 @@
     "webpack-notifier": "^1.6.0"
   },
   "dependencies": {
-    "@babel/preset-env": "^7.0.0",
     "nprogress": "^0.2.0"
   }
 }
