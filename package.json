@@ -20,10 +20,9 @@
   },
   "homepage": "https://github.com/krmroland/web-stack-overflow-lite#readme",
   "devDependencies": {
+    "@babel/core": "^7.0.1",
     "autoprefixer": "^9.1.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
+    "babel-loader": "^8.0.2",
     "browser-sync": "^2.24.6",
     "browser-sync-webpack-plugin": "^2.2.2",
     "clean-webpack-plugin": "^0.1.19",
@@ -48,5 +47,9 @@
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
     "webpack-notifier": "^1.6.0"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.0.0",
+    "nprogress": "^0.2.0"
   }
 }

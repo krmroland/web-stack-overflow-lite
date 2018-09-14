@@ -4,19 +4,19 @@ const rules = require("./build-scripts/rules");
 const plugins = require("./build-scripts/plugins");
 
 const mode = require("./build-scripts/mode").current;
-const fs = require("fs");
+
 const config = {
     mode,
     //entry points
     entry: {
-        css: "./src/sass/app.scss",
-        js: "./src/js/app.js"
+        auth: "./src/js/auth.js",
+        main: "./src/js/app.js"
     },
 
     //destination for trans-piled files
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "[name]/app.[name]"
+        filename: "js/[name].js"
     },
     performance: {
         hints: false
