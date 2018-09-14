@@ -31,9 +31,10 @@ const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const pretty = require("pretty");
 
 const mode = require("./mode");
-
 const plugins = [
-    new CleanWebpackPlugin([path.resolve(__dirname, "dist")]),
+    new CleanWebpackPlugin(["dist"], {
+        root: path.resolve("./")
+    }),
     new WebpackNotifier({
         alwaysNotify: true,
         title: "Compilation was successful",
@@ -68,7 +69,7 @@ const plugins = [
 ];
 
 const CleanCss = new PurgecssPlugin({
-    paths: glob.sync(["../src/**/*.hbs", "./src/js/*.js"]),
+    paths: glob.sync(["./src/**/*.hbs", "./src/js/*.js"]),
     whitelist: ["active"]
 });
 
