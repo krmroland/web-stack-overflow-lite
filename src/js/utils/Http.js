@@ -69,7 +69,7 @@ class Http {
     }
     /**
      * Resets the current object state
-     * @param  {Stribg} method
+     * @param  {String} method
      * @param  {String|undefined} data
      * @return {self}
      */
@@ -109,6 +109,7 @@ class Http {
         return window
             .fetch(this.prepareUrl(url), this.makeOptions())
             .then(this.validateResponse.bind(this))
+            .catch(this.handleFailure.bind(this))
             .finally(() => NProgress.done());
     }
     /**
@@ -132,8 +133,27 @@ class Http {
      */
     validateResponse(response) {
         return this.convertResponse(response).then(data => {
-            return response.ok ? Promise.resolve(data) : Promise.reject(data);
+            return response.ok
+                ? Promise.resolve(data)
+                : this.handleFailure(data);
         });
+    }
+    /**
+     * Handle a failed fetch request
+     * @param  {Object|Error|String} error
+     * @return {Promise}
+     */
+    handleFailure(error) {
+        let message;
+
+        if (typeof error === "string") {
+            message = error;
+        } else {
+            message = error.message || "Something went wrong";
+        }
+        window.Notify.error(message);
+
+        return Promise.reject(error);
     }
     /**
      * Converts a given response based on its content-type
