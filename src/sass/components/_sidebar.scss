@@ -1,4 +1,4 @@
-#Sidebar {
+#JS-Sidebar {
     position: fixed;
     top: 75px;
     bottom: 0;
@@ -41,7 +41,7 @@
 }
 
 @media (max-width: $breakpoint-md) {
-    #Sidebar {
+    #JS-Sidebar {
         margin-top: 1em;
         position: static;
         aside {

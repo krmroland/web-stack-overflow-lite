@@ -1,5 +1,13 @@
 class SubmitButton extends HTMLButtonElement {
     /**
+     * Creates an instance of this class
+     * @return {[type]} [description]
+     */
+    constructor() {
+        super();
+        this.type = "submit";
+    }
+    /**
      * Activates the loading state of the button
      */
     activateLoading() {

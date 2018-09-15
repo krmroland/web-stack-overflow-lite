@@ -1,5 +1,3 @@
-import NProgress from "nprogress";
-
 class Http {
     /**
      * Creates an instance of the http class
@@ -13,14 +11,22 @@ class Http {
             "content-type": "application/json"
         };
         this.showProgress = true;
+
+        this.errrorInterceptors = [];
+
+        this.addAuthroziationHeader();
     }
     /**
      * Adds an authorization Header
-     * @param {String} token
      * @return {self}
      */
-    addAuthroziationHeader(token) {
-        this.headers["Authorization"] = `Bearer ${token}`;
+    addAuthroziationHeader() {
+        const token = window.localStorage.getItem("auth-token");
+
+        if (token) {
+            this.headers["Authorization"] = `Bearer ${token}`;
+        }
+
         return this;
     }
     /**
@@ -104,13 +110,13 @@ class Http {
     makeRequest(url, method, data = null) {
         this.resetState(method, data);
         if (this.showProgress) {
-            NProgress.start();
+            window.PageLoader.start();
         }
         return window
             .fetch(this.prepareUrl(url), this.makeOptions())
             .then(this.validateResponse.bind(this))
             .catch(this.handleFailure.bind(this))
-            .finally(() => NProgress.done());
+            .finally(() => window.PageLoader.done());
     }
     /**
      * Prepares a given URL
@@ -135,7 +141,7 @@ class Http {
         return this.convertResponse(response).then(data => {
             return response.ok
                 ? Promise.resolve(data)
-                : this.handleFailure(data);
+                : this.handleFailure(data, response);
         });
     }
     /**
@@ -143,7 +149,7 @@ class Http {
      * @param  {Object|Error|String} error
      * @return {Promise}
      */
-    handleFailure(error) {
+    handleFailure(error, response) {
         let message;
 
         if (typeof error === "string") {
@@ -151,9 +157,29 @@ class Http {
         } else {
             message = error.message || "Something went wrong";
         }
+        this.fireErrorInterceptors(response);
+
         window.Notify.error(message);
 
         return Promise.reject(error);
+    }
+
+    /**
+     * Adds an error interceptor
+     * @param {Function} callback
+     */
+    addErrorInterceptor(callback) {
+        this.errrorInterceptors.push(callback);
+    }
+    /**
+     * Invokes all registered error interceptors
+     * @param  {Response} response
+     */
+    fireErrorInterceptors(response) {
+        if (response) {
+            //interceptors may cause side effects, e.g redirect to other pages
+            this.errrorInterceptors.forEach(callback => callback(response));
+        }
     }
     /**
      * Converts a given response based on its content-type
