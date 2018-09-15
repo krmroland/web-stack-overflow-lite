@@ -17,7 +17,7 @@ class AuthenticationForm {
     login(e) {
         this.storeData(e.detail);
         window.Notify.onNextLoad().success("Welcome to stack overflow");
-        window.location.href = "index.html";
+        window.location.replace("index.html");
     }
     /**
      * Stores the  token and the user name in localStorage

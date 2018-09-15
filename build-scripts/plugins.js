@@ -63,9 +63,10 @@ const plugins = [
 ];
 
 const CleanCss = new PurgecssPlugin({
-    paths: glob.sync(["./src/**/*.hbs", "./src/js/*.js"]),
+    paths: glob.sync(["./src/**/*.hbs", "./src/js/*.js", "./src/js/**/.js"]),
     whitelist: ["active", "#nprogress"],
-    whitelistPatternsChildren: [/^nprogress/]
+    whitelistPatternsChildren: [/^nprogress/, /^JS-/],
+    keyframes: true
 });
 
 if (mode.isNone) {

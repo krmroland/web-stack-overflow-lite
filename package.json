@@ -4,11 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch":
-      "cross-env NODE_ENV=development webpack --progress --hide-modules --watch --watch-poll",
+    "watch": "cross-env NODE_ENV=development webpack --progress --hide-modules --watch --watch-poll",
     "build": "cross-env NODE_ENV=none webpack --progress --hide-modules",
-    "production":
-      "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "repository": {
     "type": "git",
@@ -46,6 +44,7 @@
     "purgecss-webpack-plugin": "^1.2.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
+    "uglify-template-string-loader": "^1.1.0",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
     "webpack-notifier": "^1.6.0"
