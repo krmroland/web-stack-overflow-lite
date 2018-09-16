@@ -28,6 +28,8 @@ const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 
 const pretty = require("pretty");
 
+const minify = require("html-minifier").minify;
+
 const mode = require("./mode");
 const plugins = [
     new CleanWebpackPlugin(["dist"], {
@@ -52,7 +54,13 @@ const plugins = [
         data: path.join(__dirname, "../src/dummyData.json"),
 
         onBeforeSave(Handlebars, resultHtml) {
-            return pretty(resultHtml);
+            return mode.isProduction
+                ? minify(resultHtml, {
+                      collapseInlineTagWhitespace: true,
+                      collapseWhitespace: true,
+                      removeComments: true
+                  })
+                : pretty(resultHtml);
         },
         onBeforeSetup(handlebars) {
             handlebars.registerHelper(layouts(handlebars));

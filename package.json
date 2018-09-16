@@ -31,6 +31,7 @@
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
     "css-mqpacker": "^7.0.0",
+    "date-fns": "^1.29.0",
     "eslint": "^5.5.0",
     "eslint-loader": "^2.1.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
@@ -50,6 +51,7 @@
     "webpack-notifier": "^1.6.0"
   },
   "dependencies": {
+    "html-minifier": "^3.5.20",
     "nprogress": "^0.2.0"
   }
 }
