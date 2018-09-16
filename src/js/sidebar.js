@@ -1,3 +1,4 @@
+import { logout } from "./utils/Helpers";
 /**
  * Selector for sidebar markup in the DOM
  * @type {String}
@@ -52,21 +53,17 @@ class Sidebar {
     listenForLogout() {
         const link = this.sidebarNode.querySelector(LOGOUT_LINK_SELECTOR);
         if (link) {
-            link.addEventListener("click", this.logout.bind(this, link.href));
+            link.addEventListener("click", this.logout.bind(this));
         }
     }
 
     /**
      * Event Listener for logout
-     * @param  {[String]} url
      * @param  {Event} event
      */
-    logout(url, event) {
+    logout(event) {
         event.preventDefault();
-        //destroy the tokens and auth-name
-        window.localStorage.removeItem("auth-token");
-        window.localStorage.removeItem("auth-name");
-        window.location.replace(url);
+        logout();
     }
     /**
      * Adds the currently logged in username to the sidebar

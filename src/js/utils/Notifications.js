@@ -31,7 +31,7 @@ class NotificaitonsElement extends HTMLElement {
   }
   connectedCallback() {
     this.shadow.appendChild(this.styleNode);
-    this.shadow.appendChild(this.contentNode);
+
     //flash any messages in localStorage if any
     this.flashMessageInStorage();
   }
@@ -77,12 +77,12 @@ class NotificaitonsElement extends HTMLElement {
 
     this.contentNode.className = `notification ${flashClass} ${ANIMATE_IN_CLASS}`;
 
-    this.hidden = false;
+    this.shadow.appendChild(this.contentNode);
 
-    window.setTimeout(() => {
+    window.setInterval(() => {
       this.contentNode.classList.remove(ANIMATE_IN_CLASS);
       this.contentNode.classList.add(ANIMATE_OUT_CLASS);
-    }, 3000);
+    }, 4000);
   }
   /**
    * Store the flash data in localStorage so that it can be flashed on the next request
@@ -113,7 +113,7 @@ class NotificaitonsElement extends HTMLElement {
   doneAnimating(e) {
     //hides the element after the animate out class
     if (this.contentNode.classList.contains(ANIMATE_OUT_CLASS)) {
-      this.hidden = true;
+      this.shadow.removeChild(this.contentNode);
     }
   }
   /**

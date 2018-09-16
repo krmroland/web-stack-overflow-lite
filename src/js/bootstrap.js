@@ -6,3 +6,4 @@ import "./forms";
 
 window.Http = new Http(getAPIUrl());
 
+// const supportsShadowDOMV1 = !!HTMLElement.prototype.attachShadow;

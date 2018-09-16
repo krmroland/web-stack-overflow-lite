@@ -15,23 +15,19 @@ class AuthenticationForm {
      * @param  {CustomEvent} e
      */
     login(e) {
-        this.storeData(e.detail);
-        window.Notify.onNextLoad().success("Welcome to stack overflow");
-        window.location.replace("index.html");
-    }
-    /**
-     * Stores the  token and the user name in localStorage
-     * @param {Object} data
-     */
-    storeData(data) {
-        const { name, token } = data;
+        const { name, token } = e.detail;
+
         if (!token) {
             new Error("Token not available in the data");
         }
 
         window.localStorage.setItem("auth-token", token);
         window.localStorage.setItem("auth-name", name);
+
+        window.Notify.onNextLoad().success(`Welcome ${name}`);
+        window.location.replace("index.html");
     }
+
     /**
      * Sets the form node
      * @param {HTMLFormElement} node

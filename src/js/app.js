@@ -1,11 +1,16 @@
 import "../sass/app.scss";
 import "./bootstrap";
 import "./sidebar";
-import { interceptUnathourizedHttpErrors } from "./utils/Helpers";
+import "./questions";
 import "./links";
 import "./textArea";
 import "./voting";
+import {
+    interceptUnathourizedHttpErrors,
+    ensureUserIsLoggedIn
+} from "./utils/Helpers";
 
-(function() {
-    interceptUnathourizedHttpErrors();
-})();
+ensureUserIsLoggedIn();
+
+interceptUnathourizedHttpErrors();
+

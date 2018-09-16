@@ -1,4 +1,6 @@
 import FormErrors from "./FormErrors";
+import { waitForCustomChildElements } from "../utils/Helpers";
+
 class FormComponent extends HTMLFormElement {
     /**
      * Creates an instance of the FormComponent
@@ -16,11 +18,14 @@ class FormComponent extends HTMLFormElement {
      * @return {FormComponent}
      */
     connectedCallback() {
-        const undefinedElements = this.querySelectorAll(":not(:defined)");
-        // get all undefined inputs and wait until they have all been parsed
-        return Promise.all(
-            Array.from(undefinedElements, this.elementIsDefined.bind(this))
-        ).then(() => this.setInputs().setSubmitButton());
+        waitForCustomChildElements(this).then(() =>
+            this.setInputs().setSubmitButton()
+        );
+        // const undefinedElements = this.querySelectorAll(":not(:defined)");
+        // // get all undefined inputs and wait until they have all been parsed
+        // return Promise.all(
+        //     Array.from(undefinedElements, this.elementIsDefined.bind(this))
+        // ).then(() => this.setInputs().setSubmitButton());
     }
     /**
      * Wait until a custom web element has been defined
