@@ -1,5 +1,4 @@
-import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
-
+import { strLimit } from "../utils/Helpers";
 class SingleQuestion extends HTMLElement {
   /**
    * Creates an instance of a Single Question
@@ -7,22 +6,32 @@ class SingleQuestion extends HTMLElement {
    */
   constructor() {
     super();
-    this.template = document.createElement("template");
     this.attachShadow({ mode: "open" });
+    this.contentNode = document.createElement("div");
+    this.shadowRoot.appendChild(this.contentNode);
+    this.isSummarized = false;
+  }
+  /**
+   * Summarizes the question description
+   * @param  {Boolean} value
+   * @return {SingleQuestion}
+   */
+  summarize(value = true) {
+    this.isSummarized = value;
+    return this;
   }
 
-  /**
-   * Listen for when the Single Question is mounted to the dom
-   */
-  connectedCallback() {
-    this.shadowRoot.appendChild(this.template.content.cloneNode(true));
-  }
   /**
    * Sets the single question template
    */
   setTemplate(question) {
     const { author } = question;
-    this.template.innerHTML = `
+
+    let { description, updated_at } = question;
+
+    description = this.isSummarized ? strLimit(description) : description;
+
+    this.contentNode.innerHTML = `
             <style>
               :host{
                 display:block;
@@ -62,19 +71,6 @@ class SingleQuestion extends HTMLElement {
                 color:var(--grey-dark);
                 line-height:1.8;
               }
-              .question-footer{
-                 display:flex;
-                 justify-content:flex-end;
-                flex-wrap:wrap;
-                font-size:var(--font-small);
-                color:var(--grey-dark);
-                border-top:1px solid var(--light);
-                padding-top:0.5em;
-              }
-              .px-2{
-                padding-left:1.5em;
-                padding-right:0.5em;
-              }
             </style>
             <div class="container">
               <div>
@@ -85,18 +81,9 @@ class SingleQuestion extends HTMLElement {
                   ${question.title}
                 </a>
 
-                <p>
-                  ${question.description} ....
-               </p>
-                <div class="question-footer">
-                  <span class="fw-600">
-                    ${distanceInWordsToNow(question.updated_at)}
-                  </span>
-                  <span class="px-2">By</span>
-                  <a href=""> 
-                      <strong class="text-primary">${author.name}</strong>
-                  </a>
-                </div>
+                <p> ${description}</p>
+                 <author-details when="${updated_at}" name="${author.name}">
+                 </author-details>
              </div>
            </div>
 

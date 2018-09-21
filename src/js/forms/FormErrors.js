@@ -22,7 +22,7 @@ class FormErrors {
      * @return {Boolean}
      */
     has(name) {
-        return (
+        return !!(
             Object.prototype.hasOwnProperty.call(this.errors, name) &&
             this.errors[name]
         );

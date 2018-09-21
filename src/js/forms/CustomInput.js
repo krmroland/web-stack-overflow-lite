@@ -1,7 +1,7 @@
-export default class FormInput extends HTMLElement {
+class CustomInput extends HTMLElement {
     /**
-     * Creates an instance of the FormInput class
-     * @return {FormInput}
+     * Creates an instance of the CustomInput class
+     * @return {CustomInput}
      */
     constructor() {
         super();
@@ -66,6 +66,7 @@ export default class FormInput extends HTMLElement {
                 color:#E3342F;
             }
             .input {
+              box-sizing: border-box;
               display: block;
               width: 100%;
               font-size: 1rem;
@@ -73,6 +74,7 @@ export default class FormInput extends HTMLElement {
               padding: 0.25em 0.5em;
               resize: none;
               color: #323232;
+
             }
             .input:focus {
               outline: none;
@@ -137,3 +139,5 @@ export default class FormInput extends HTMLElement {
         this.inputNode.value = "";
     }
 }
+
+export default CustomInput;

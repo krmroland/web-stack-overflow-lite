@@ -11,12 +11,3 @@
 @import "custom";
 @import "nprogress";
 
-single-question {
-    display: block;
-    box-shadow: $shadow;
-    > img {
-        width: 50px;
-        height: 50px;
-    }
-}
-

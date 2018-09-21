@@ -42,6 +42,11 @@ export const ensureUserIsLoggedIn = () => {
     }
 };
 
+/**
+ * Waits for all custom child components to be defined
+ * @param  {HTMLElement} parentElement
+ * @return {Promise}
+ */
 export const waitForCustomChildElements = parentElement => {
     // get all undefined child elements
     const undefinedElements = parentElement.querySelectorAll(":not(:defined)");
@@ -53,4 +58,44 @@ export const waitForCustomChildElements = parentElement => {
             )
         )
     );
+};
+
+/**
+ * Defines custom defined web elements
+ * @param  {Object} elements
+ */
+export const defineCustomElements = (elements, extensions = {}) => {
+    Object.keys(elements).forEach(name => {
+        const options = {};
+
+        if (extensions[name]) {
+            options["extends"] = extensions[name];
+        }
+
+        window.customElements.define(kebabCase(name), elements[name], options);
+    });
+};
+
+/**
+ * Converts a string to kebab case
+ * @param  {String} string
+ * @return {String}
+ */
+export const kebabCase = string =>
+    string
+        .replace(/([a-z])([A-Z])/g, "$1-$2")
+        .replace(/\s+/g, "-")
+        .toLowerCase();
+/**
+ * Limit a give string to a number of characters
+ * @param  {String} string
+ * @param  {Number} limit
+ * @param  {Stribg} end
+ * @return {String}
+ */
+export const strLimit = (string, limit = 100, end = "...") => {
+    if (string.length <= limit) {
+        return string;
+    }
+    return string.slice(0, limit).trim() + end;
 };

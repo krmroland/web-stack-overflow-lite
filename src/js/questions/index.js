@@ -1,6 +1,6 @@
 import AllQuestions from "./AllQuestions";
 import SingleQuestion from "./SingleQuestion";
+import { defineCustomElements } from "../utils/Helpers";
+import "./addQuestion";
 
-customElements.define("single-question", SingleQuestion);
-
-customElements.define("all-questions", AllQuestions);
+defineCustomElements({SingleQuestion, AllQuestions});

@@ -1,9 +1,9 @@
 import "../sass/app.scss";
 import "./bootstrap";
 import "./sidebar";
+import "./common";
 import "./questions";
-import "./links";
-import "./textArea";
+import "./answers";
 import "./voting";
 import {
     interceptUnathourizedHttpErrors,
@@ -13,4 +13,3 @@ import {
 ensureUserIsLoggedIn();
 
 interceptUnathourizedHttpErrors();
-

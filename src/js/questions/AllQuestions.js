@@ -14,6 +14,9 @@ class AllQuestions extends HTMLElement {
      */
     connectedCallback() {
         window.Http.get("/questions").then(this.renderQuestions.bind(this));
+        // .catch(error =>
+        //     window.Notify.error("There was an error fetching questions")
+        // );
     }
     /**
      * Renders the Fetched QUestions to the DOM
@@ -40,7 +43,7 @@ class AllQuestions extends HTMLElement {
     renderQuestion(question) {
         const questionNode = document.createElement("single-question");
         this.renderedQuestions[question.id] = questionNode;
-        questionNode.setTemplate(question);
+        questionNode.summarize().setTemplate(question);
         this.shadowRoot.appendChild(questionNode);
     }
 }

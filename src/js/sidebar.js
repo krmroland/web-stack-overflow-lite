@@ -20,6 +20,12 @@ const LOGOUT_LINK_SELECTOR = "#JS-logout-link";
  */
 const URL_PATH_NAME = window.location.pathname;
 
+/**
+ * The path items that are related to the questions page
+ * @type {Array}
+ */
+const QUESTION_RELATED_PATH = ["answers.html", "/"];
+
 class Sidebar {
     /**
      * Creates an instance of the sidebar
@@ -45,8 +51,26 @@ class Sidebar {
      * @param  {HTMLAnchorElement} link
      */
     activateSidebarLink(link) {
-        URL_PATH_NAME === link.pathname ? link.classList.add("active") : null;
+        if (URL_PATH_NAME === link.pathname) {
+            return link.classList.add("active");
+        }
+        const href = link.getAttribute("href");
+
+        if (href === "index.html" && this.pathIsRelatedToQuestion()) {
+            return link.classList.add("active");
+        }
+        return null;
     }
+    /**
+     * Determines if the current path is related to the questions eg an answer
+     * @return {Boolean}
+     */
+    pathIsRelatedToQuestion() {
+        return QUESTION_RELATED_PATH.includes(
+            URL_PATH_NAME.replace(/(^\/)(.+)/g, "$2")
+        );
+    }
+
     /**
      * Register an event listener for when a user tries to logout
      */
