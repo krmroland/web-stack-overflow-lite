@@ -2,7 +2,7 @@
 This repository contains the `UI` for the [`Stack overflow lite API`](https://github.com/krmroland/stackoverflow-lite-ui) 
 
 #### Demo
-A working demo is hosted [here](https://krmroland.github.io/stackoverflow-lite-ui/)
+A working demo is hosted [here](https://krmroland.github.io/web-stack-overflow-lite/)
 
 ![demo image](demo.gif "Demo")
 
