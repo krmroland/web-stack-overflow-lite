@@ -44,3 +44,8 @@
         border: 1px solid $accent;
     }
 }
+
+//don't display any element that has not been defined on the page yet
+:not(:defined) {
+    display: none;
+}

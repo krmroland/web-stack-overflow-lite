@@ -1,9 +1,10 @@
-import FormComponent from "./FormComponent";
-import FormInput from "./FormInput";
+import AjaxForm from "./AjaxForm";
+import CustomInput from "./CustomInput";
+import CustomTextarea from "./CustomTextarea";
 import SubmitButton from "./SubmitButton";
+import { defineCustomElements } from "../utils/Helpers";
 
-customElements.define("ajax-form", FormComponent, { extends: "form" });
-customElements.define("custom-input", FormInput);
-customElements.define("submit-button", SubmitButton, { extends: "button" });
-
-
+defineCustomElements(
+    { CustomInput, CustomTextarea, AjaxForm, SubmitButton },
+    { AjaxForm: "form", SubmitButton: "button" }
+);

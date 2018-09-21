@@ -2,12 +2,12 @@
  * Animation class to be added when the notification is being shown
  * @type {String}
  */
-const ANIMATE_IN_CLASS = "zoomIn";
+const ANIMATE_IN_CLASS = "bounceInUp";
 /**
  * Animation class to remove when the notification is being removed
  * @type {String}
  */
-const ANIMATE_OUT_CLASS = "fadeOutDown";
+const ANIMATE_OUT_CLASS = "bounceOutDown";
 /**
  * The local storage name  key for notifications
  * @type {String}
@@ -24,6 +24,7 @@ class NotificaitonsElement extends HTMLElement {
     this.addcontentNode();
     this.setStyleNode();
     this.shouldFlashNow = true;
+    this.intervalId = null;
   }
   onNextLoad() {
     this.shouldFlashNow = false;
@@ -31,7 +32,7 @@ class NotificaitonsElement extends HTMLElement {
   }
   connectedCallback() {
     this.shadow.appendChild(this.styleNode);
-    this.shadow.appendChild(this.contentNode);
+
     //flash any messages in localStorage if any
     this.flashMessageInStorage();
   }
@@ -77,12 +78,14 @@ class NotificaitonsElement extends HTMLElement {
 
     this.contentNode.className = `notification ${flashClass} ${ANIMATE_IN_CLASS}`;
 
-    this.hidden = false;
+    this.shadow.appendChild(this.contentNode);
 
-    window.setTimeout(() => {
+    const id = window.setTimeout(() => {
       this.contentNode.classList.remove(ANIMATE_IN_CLASS);
       this.contentNode.classList.add(ANIMATE_OUT_CLASS);
-    }, 3000);
+      //clear the interval to avoid memory licks
+      window.clearTimeout(id);
+    }, 5000);
   }
   /**
    * Store the flash data in localStorage so that it can be flashed on the next request
@@ -113,37 +116,66 @@ class NotificaitonsElement extends HTMLElement {
   doneAnimating(e) {
     //hides the element after the animate out class
     if (this.contentNode.classList.contains(ANIMATE_OUT_CLASS)) {
-      this.hidden = true;
+      this.shadow.removeChild(this.contentNode);
     }
   }
   /**
    * Sets styles for the element
-   * @see https://github.com/daneden/animate.css for animations
+   * @see @see https://github.com/daneden/animate.css for animation frames
    */
   setStyleNode() {
     this.styleNode = document.createElement("style");
     this.styleNode.textContent = `
-
-        @keyframes zoomIn {
-          from {
-            opacity: 0;
-            transform: scale3d(0.3, 0.3, 0.3);
-          }
-
-          50% {
-            opacity: 1;
-          }
+      @keyframes bounceInUp {
+        from,
+        60%,
+        75%,
+        90%,
+        to {
+          animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
         }
-        @keyframes fadeOutDown {
-          from {
-            opacity: 1;
-          }
 
-          to {
-            opacity: 0;
-            transform: translate3d(0, 100%, 0);
-          }
+        from {
+          opacity: 0;
+          transform: translate3d(0, 3000px, 0);
         }
+
+        60% {
+          opacity: 1;
+          transform: translate3d(0, -20px, 0);
+        }
+
+        75% {
+          transform: translate3d(0, 10px, 0);
+        }
+
+        90% {
+          transform: translate3d(0, -5px, 0);
+        }
+
+        to {
+          transform: translate3d(0, 0, 0);
+        }
+      }
+
+       @keyframes bounceOutDown {
+         20% {
+           transform: translate3d(0, 10px, 0);
+         }
+
+         40%,
+         45% {
+           opacity: 1;
+           transform: translate3d(0, -20px, 0);
+         }
+
+         to {
+           opacity: 0;
+           transform: translate3d(0, 2000px, 0);
+         }
+       }
+
+       
         .notification{
             z-index:1;
             position:fixed;
@@ -172,9 +204,13 @@ class NotificaitonsElement extends HTMLElement {
         .zoomIn {
           animation-name: zoomIn;
         }
+
+        .bounceInUp {
+          animation-name: bounceInUp;
+        }
   
-        .fadeOutDown {
-           animation-name: fadeOutDown;
+        .bounceOutDown {
+          animation-name: bounceOutDown;
         }
         `;
   }

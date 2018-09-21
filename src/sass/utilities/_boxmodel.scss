@@ -16,21 +16,21 @@ $directions: (
 
 @each $space, $value in $spacings {
     @each $short, $property in (m: margin, p: padding) {
-        @include responsive($short + '-' + $space) {
+        @include responsive($short + "-" + $space) {
             #{$property}: $value;
         }
 
         @each $prefix, $direction in $directions {
-            @include responsive($short + $prefix + '-' + $space) {
+            @include responsive($short + $prefix + "-" + $space) {
                 #{$property}-#{$direction}: $value;
             }
         }
         //horizontal and vertical spacings
-        @include responsive($short + 'x-' + $space) {
+        @include responsive($short + "x-" + $space) {
             #{$property}-left: $value;
             #{$property}-right: $value;
         }
-        @include responsive($short + 'y-' + $space) {
+        @include responsive($short + "y-" + $space) {
             #{$property}-top: $value;
             #{$property}-bottom: $value;
         }

@@ -1,8 +1,10 @@
 import FormErrors from "./FormErrors";
-class FormComponent extends HTMLFormElement {
+import { waitForCustomChildElements } from "../utils/Helpers";
+
+class AjaxForm extends HTMLFormElement {
     /**
-     * Creates an instance of the FormComponent
-     * @return {FormComponent}
+     * Creates an instance of the AjaxForm
+     * @return {AjaxForm}
      */
     constructor() {
         super();
@@ -13,30 +15,19 @@ class FormComponent extends HTMLFormElement {
     }
     /**
      * Listen for when this component is mounted to the dom
-     * @return {FormComponent}
+     * @return {AjaxForm}
      */
     connectedCallback() {
-        const undefinedElements = this.querySelectorAll(":not(:defined)");
-        // get all undefined inputs and wait until they have all been parsed
-        return Promise.all(
-            Array.from(undefinedElements, this.elementIsDefined.bind(this))
-        ).then(() => this.setInputs().setSubmitButton());
-    }
-    /**
-     * Wait until a custom web element has been defined
-     * @param  {HtmlElement} element
-     * @return {Promise}    A promise that resolves after  element definition
-     */
-    elementIsDefined(element) {
-        return window.customElements.whenDefined(
-            element.getAttribute("is") || element.localName
+        waitForCustomChildElements(this).then(() =>
+            this.setInputs().setSubmitButton()
         );
     }
+
     /**
      * Sets the form inputs and buttons
      */
     setInputs() {
-        this.querySelectorAll("custom-input").forEach(
+        this.querySelectorAll("custom-input,custom-textarea").forEach(
             input => (this.inputs[input.getName()] = input.setForm(this))
         );
         return this;
@@ -100,4 +91,4 @@ class FormComponent extends HTMLFormElement {
     }
 }
 
-export default FormComponent;
+export default AjaxForm;

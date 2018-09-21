@@ -1,3 +1,4 @@
+import { logout } from "./utils/Helpers";
 /**
  * Selector for sidebar markup in the DOM
  * @type {String}
@@ -18,6 +19,12 @@ const LOGOUT_LINK_SELECTOR = "#JS-logout-link";
  * @type {String}
  */
 const URL_PATH_NAME = window.location.pathname;
+
+/**
+ * The path items that are related to the questions page
+ * @type {Array}
+ */
+const QUESTION_RELATED_PATH = ["answers.html", "/"];
 
 class Sidebar {
     /**
@@ -44,29 +51,43 @@ class Sidebar {
      * @param  {HTMLAnchorElement} link
      */
     activateSidebarLink(link) {
-        URL_PATH_NAME === link.pathname ? link.classList.add("active") : null;
+        if (URL_PATH_NAME === link.pathname) {
+            return link.classList.add("active");
+        }
+        const href = link.getAttribute("href");
+
+        if (href === "index.html" && this.pathIsRelatedToQuestion()) {
+            return link.classList.add("active");
+        }
+        return null;
     }
+    /**
+     * Determines if the current path is related to the questions eg an answer
+     * @return {Boolean}
+     */
+    pathIsRelatedToQuestion() {
+        return QUESTION_RELATED_PATH.includes(
+            URL_PATH_NAME.replace(/(^\/)(.+)/g, "$2")
+        );
+    }
+
     /**
      * Register an event listener for when a user tries to logout
      */
     listenForLogout() {
         const link = this.sidebarNode.querySelector(LOGOUT_LINK_SELECTOR);
         if (link) {
-            link.addEventListener("click", this.logout.bind(this, link.href));
+            link.addEventListener("click", this.logout.bind(this));
         }
     }
 
     /**
      * Event Listener for logout
-     * @param  {[String]} url
      * @param  {Event} event
      */
-    logout(url, event) {
+    logout(event) {
         event.preventDefault();
-        //destroy the tokens and auth-name
-        window.localStorage.removeItem("auth-token");
-        window.localStorage.removeItem("auth-name");
-        window.location.replace(url);
+        logout();
     }
     /**
      * Adds the currently logged in username to the sidebar
