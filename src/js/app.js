@@ -5,11 +5,8 @@ import "./common";
 import "./questions";
 import "./answers";
 import "./voting";
-import {
-    interceptUnathourizedHttpErrors,
-    ensureUserIsLoggedIn
-} from "./utils/Helpers";
+import "./errorInterceptors";
+import { ensureUserIsLoggedIn } from "./utils/Helpers";
 
 ensureUserIsLoggedIn();
 
-interceptUnathourizedHttpErrors();

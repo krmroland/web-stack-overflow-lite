@@ -8,19 +8,6 @@ export const getAPIUrl = () =>
         : "http://127.0.0.1:5000/api/v1.1/";
 
 /**
- * Intercepts all HTTP 401 errors and redirects to the login.html
- */
-export const interceptUnathourizedHttpErrors = () => {
-    window.Http.addErrorInterceptor(response => {
-        const { status } = response;
-        if (status === 401) {
-            window.Notify.onNextLoad().error("Unauthorized, Please login!");
-            logout();
-        }
-    });
-};
-
-/**
  * Logs out a given user
 
  */
