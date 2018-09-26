@@ -2,5 +2,6 @@
     "root": "dist/",
     "routes": {
         "/": "index.html"
-    }
+    },
+    "error_page": "errorsPage.html"
 }
