@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "cross-env NODE_ENV=development webpack --progress --hide-modules --watch --watch-poll",
+    "watch":
+      "cross-env NODE_ENV=development webpack --progress --hide-modules --watch --watch-poll",
     "build": "cross-env NODE_ENV=none webpack --progress --hide-modules",
-    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "production":
+      "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "postinstall": "NODE_ENV=production webpack --progress"
   },
   "repository": {
     "type": "git",
@@ -53,5 +56,8 @@
   "dependencies": {
     "html-minifier": "^3.5.20",
     "nprogress": "^0.2.0"
+  },
+  "engines": {
+    "node": "10.5.0"
   }
 }
