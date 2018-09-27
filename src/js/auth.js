@@ -23,7 +23,7 @@ class AuthenticationForm {
 
         window.localStorage.setItem("auth-token", token);
         window.localStorage.setItem("auth-name", name);
-
+        window.Notify.success("Login successful , redirecting.....");
         window.Notify.onNextLoad().success(`Welcome ${name}`);
         window.location.replace("index.html");
     }

@@ -1,4 +1,5 @@
 import NProgress from "nprogress";
+import { waitForCustomChildElements } from "./Helpers";
 
 class PageLoader extends HTMLElement {
   /**
@@ -96,6 +97,8 @@ window.PageLoader = loader;
 
 window.addEventListener("DOMContentLoaded", () => loader.start());
 
+window.addEventListener("unload", loader.start());
+
 window.addEventListener("load", () => loader.done());
 
-window.addEventListener("unload", loader.start());
+waitForCustomChildElements(document.body).then(() => loader.done());
