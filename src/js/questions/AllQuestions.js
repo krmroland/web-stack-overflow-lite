@@ -14,9 +14,6 @@ class AllQuestions extends HTMLElement {
      */
     connectedCallback() {
         window.Http.get("/questions").then(this.renderQuestions.bind(this));
-        // .catch(error =>
-        //     window.Notify.error("There was an error fetching questions")
-        // );
     }
     /**
      * Renders the Fetched QUestions to the DOM

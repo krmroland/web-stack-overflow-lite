@@ -1,4 +1,11 @@
 import { logout } from "./utils/Helpers";
+
+/**
+ * HTTP Error codes that should be intercepted
+ * @type {Array}
+ */
+const INTERCEPTABLE_ERROR_CODES = [404, 500];
+
 /**
  * Module for intercepting and handling HTTP erros
  */
@@ -22,7 +29,7 @@ class HttpErrorInterceptors {
             window.Notify.onNextLoad().error("Unauthorized, Please login!");
             return logout();
         }
-        if ([404, 500].includes(status)) {
+        if (INTERCEPTABLE_ERROR_CODES.includes(status)) {
             return this.redirectToErrorPage(response);
         }
         return null;
